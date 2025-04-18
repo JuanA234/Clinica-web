@@ -1,6 +1,7 @@
 package edu.unimagdalena.clinica.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
 import lombok.Builder;
 import lombok.Data;
 
@@ -28,8 +29,10 @@ public class Appointment {
     @JoinColumn(name = "consult_room_id", nullable = false)
     private ConsultRoom consultRoom;
 
+    @Future
     private LocalDateTime startTime;
 
+    @Future
     private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
