@@ -9,6 +9,6 @@ public record RequestDoctorDTO(
         String email,
         String specialty,
         LocalTime availableFrom,
-        Local availableTo
+        LocalTime availableTo
 ) {
 }

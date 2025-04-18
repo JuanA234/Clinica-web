@@ -2,12 +2,16 @@ package edu.unimagdalena.clinica.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "patients")
 public class Patient {
 
@@ -22,4 +26,6 @@ public class Patient {
     private String email;
 
     private String phone;
+
+    private String history;
 }
