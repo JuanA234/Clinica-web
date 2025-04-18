@@ -2,14 +2,18 @@ package edu.unimagdalena.clinica.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "appointments")
 public class Appointment {
 
