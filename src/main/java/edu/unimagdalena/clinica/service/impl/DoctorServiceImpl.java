@@ -7,6 +7,8 @@ import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
 import edu.unimagdalena.clinica.service.interfaces.DoctorService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository repository;
     private final DoctorMapper mapper;
+
 
     public DoctorServiceImpl(DoctorRepository repository, DoctorMapper mapper) {
         this.repository = repository;
