@@ -45,6 +45,7 @@ public class PatientServiceImpl implements PatientService{
                 orElseThrow(()->new EntityNotFoundException("No se encontró el paciente"));
         patientMapper.updateEntityFromDTO(request, foundPatient);
         return patientMapper.toDTO(foundPatient);
+        //TODO Cambiar a excepción personalizada
     }
 
     @Override
