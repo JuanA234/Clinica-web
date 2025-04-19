@@ -15,5 +15,5 @@ public interface ConsultRoomMapper {
     ConsultRoom toEntity(RequestConsultRoomDTO dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    ConsultRoom updateEntityFromDto(RequestConsultRoomDTO dto, @MappingTarget ConsultRoom consultRoom);
+    ConsultRoom updateEntityFromDTO(RequestConsultRoomDTO dto, @MappingTarget ConsultRoom consultRoom);
 }

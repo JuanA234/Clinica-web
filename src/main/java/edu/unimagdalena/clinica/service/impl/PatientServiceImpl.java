@@ -7,10 +7,12 @@ import edu.unimagdalena.clinica.mapper.PatientMapper;
 import edu.unimagdalena.clinica.repository.PatientRepository;
 import edu.unimagdalena.clinica.service.interfaces.PatientService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class PatientServiceImpl implements PatientService{
 
     private final PatientRepository patientRepository;
