@@ -1,7 +1,8 @@
 package edu.unimagdalena.clinica.service.impl;
 
-import edu.unimagdalena.clinica.dto.ConsultRoom.RequestConsultRoomDTO;
+import edu.unimagdalena.clinica.dto.ConsultRoom.CreateConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.ResponseConsultRoomDTO;
+import edu.unimagdalena.clinica.dto.ConsultRoom.UpdateConsultRoomDTO;
 import edu.unimagdalena.clinica.entity.ConsultRoom;
 import edu.unimagdalena.clinica.mapper.ConsultRoomMapper;
 import edu.unimagdalena.clinica.repository.ConsultRoomRepository;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ConsultRoomServiceImpl implements ConsultRoomService {
+public class ConsultRoomServiceImpl implements ConsultRoomService{
 
     private final ConsultRoomRepository consultRoomRepository;
     private final ConsultRoomMapper consultRoomMapper;
@@ -23,7 +24,7 @@ public class ConsultRoomServiceImpl implements ConsultRoomService {
     }
 
     @Override
-    public ResponseConsultRoomDTO createConsultRoom(RequestConsultRoomDTO request) {
+    public ResponseConsultRoomDTO createConsultRoom(CreateConsultRoomDTO request) {
         return consultRoomMapper.toDTO(consultRoomRepository.save(consultRoomMapper.toEntity(request)));
     }
 
@@ -42,7 +43,7 @@ public class ConsultRoomServiceImpl implements ConsultRoomService {
     }
 
     @Override
-    public ResponseConsultRoomDTO updateConsultRoomById(Long id, RequestConsultRoomDTO request) {
+    public ResponseConsultRoomDTO updateConsultRoomById(Long id, UpdateConsultRoomDTO request) {
         ConsultRoom foundConsultorio = consultRoomRepository.findById(id).
                 orElseThrow(()-> new EntityNotFoundException("No se encontró el consultorio"));
         consultRoomMapper.updateEntityFromDTO(request, foundConsultorio);

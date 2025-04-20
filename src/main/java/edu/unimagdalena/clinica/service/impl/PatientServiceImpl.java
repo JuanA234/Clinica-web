@@ -1,7 +1,8 @@
 package edu.unimagdalena.clinica.service.impl;
 
-import edu.unimagdalena.clinica.dto.Patient.RequestPatientDTO;
+import edu.unimagdalena.clinica.dto.Patient.CreatePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.ResponsePatientDTO;
+import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Patient;
 import edu.unimagdalena.clinica.mapper.PatientMapper;
 import edu.unimagdalena.clinica.repository.PatientRepository;
@@ -25,7 +26,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public ResponsePatientDTO createPatient(RequestPatientDTO request) {
+    public ResponsePatientDTO createPatient(CreatePatientDTO request) {
         return patientMapper.toDTO(patientRepository.save(patientMapper.toEntity(request)));
     }
 
@@ -42,7 +43,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public ResponsePatientDTO updatePatientById(Long id, RequestPatientDTO request) {
+    public ResponsePatientDTO updatePatientById(Long id, UpdatePatientDTO request) {
         Patient foundPatient = patientRepository.findById(id).
                 orElseThrow(()->new EntityNotFoundException("No se encontró el paciente"));
         patientMapper.updateEntityFromDTO(request, foundPatient);
