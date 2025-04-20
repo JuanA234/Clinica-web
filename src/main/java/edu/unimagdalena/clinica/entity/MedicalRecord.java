@@ -25,7 +25,7 @@ public class MedicalRecord {
     private Appointment appointment;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patient_id", referencedColumnName = "id",nullable = false)
     private Patient patient;
 
     private String diagnosis;

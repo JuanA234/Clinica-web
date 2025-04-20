@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Builder
@@ -28,4 +30,10 @@ public class Patient {
     private String phone;
 
     private String history;
+
+    @OneToMany(mappedBy = "patient")
+    private Set<Appointment> appointments;
+
+    @OneToMany(mappedBy = "patient")
+    private Set<MedicalRecord> medicalRecords;
 }
