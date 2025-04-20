@@ -1,8 +1,8 @@
 package edu.unimagdalena.clinica.service;
 
-import edu.unimagdalena.clinica.dto.Doctor.RequestDoctorDTO;
-import edu.unimagdalena.clinica.dto.Patient.RequestPatientDTO;
+import edu.unimagdalena.clinica.dto.Patient.CreatePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.ResponsePatientDTO;
+import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Patient;
 import edu.unimagdalena.clinica.mapper.PatientMapper;
 import edu.unimagdalena.clinica.repository.PatientRepository;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -38,7 +37,7 @@ class PatientServiceImplTest {
     void createPatient() {
         Patient patient = Patient.builder().id(1L).fullName("Juan Avendaño").email("jaavendano@gmail.com").build();
         ResponsePatientDTO responsePatient = new ResponsePatientDTO(1L, "Juan Avendaño", "jaavendano@gmail.com", null);
-        RequestPatientDTO requestPatient = new RequestPatientDTO("Juan Avendaño", "jaavendano@gmail.com", null);
+        CreatePatientDTO requestPatient = new CreatePatientDTO("Juan Avendaño", "jaavendano@gmail.com", null);
 
         when(patientRepository.save(any(Patient.class))).thenReturn(patient);
         when(patientMapper.toDTO(patient)).thenReturn(responsePatient);
@@ -97,7 +96,7 @@ class PatientServiceImplTest {
     void updatePatientById() {
         Long id = 1L;
         Patient patient = new Patient();
-        RequestPatientDTO dto = new RequestPatientDTO(patient.getFullName(), "jaavendano@gmail.com", null);
+        UpdatePatientDTO dto = new UpdatePatientDTO(patient.getFullName(), "jaavendano@gmail.com", null);
         ResponsePatientDTO responseDTO = new ResponsePatientDTO(id, patient.getFullName(), "jaavendano@gmail.com", null);
 
         when(patientRepository.findById(id)).thenReturn(Optional.of(patient));

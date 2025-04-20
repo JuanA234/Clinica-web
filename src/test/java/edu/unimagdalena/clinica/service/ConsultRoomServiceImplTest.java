@@ -1,7 +1,8 @@
 package edu.unimagdalena.clinica.service;
 
-import edu.unimagdalena.clinica.dto.ConsultRoom.RequestConsultRoomDTO;
+import edu.unimagdalena.clinica.dto.ConsultRoom.CreateConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.ResponseConsultRoomDTO;
+import edu.unimagdalena.clinica.dto.ConsultRoom.UpdateConsultRoomDTO;
 import edu.unimagdalena.clinica.entity.ConsultRoom;
 import edu.unimagdalena.clinica.mapper.ConsultRoomMapper;
 import edu.unimagdalena.clinica.repository.ConsultRoomRepository;
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -36,7 +36,7 @@ class ConsultRoomServiceImplTest {
 
     @Test
     void createConsultRoom() {
-        RequestConsultRoomDTO request = new RequestConsultRoomDTO("Consultorio 1", "piso 1", "");
+        CreateConsultRoomDTO request = new CreateConsultRoomDTO("Consultorio 1", "piso 1", "");
         ConsultRoom consultRoom = new ConsultRoom();
         ResponseConsultRoomDTO response = new ResponseConsultRoomDTO(1L, "consultorio", "piso 1", "");
 
@@ -90,7 +90,7 @@ class ConsultRoomServiceImplTest {
     @Test
     void updateConsultRoomById() {
         Long id = 1L;
-        RequestConsultRoomDTO request = new RequestConsultRoomDTO("consultorio 1", "piso 1", "");
+        UpdateConsultRoomDTO request = new UpdateConsultRoomDTO("consultorio 1", "piso 1", "");
         ConsultRoom existing = new ConsultRoom();
         ConsultRoom updated = new ConsultRoom();
         ResponseConsultRoomDTO response = new ResponseConsultRoomDTO(id, "consultorio", "piso 1", "");

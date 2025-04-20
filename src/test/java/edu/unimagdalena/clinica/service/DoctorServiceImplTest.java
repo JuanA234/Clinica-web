@@ -1,22 +1,20 @@
 package edu.unimagdalena.clinica.service;
 
-import edu.unimagdalena.clinica.dto.Doctor.RequestDoctorDTO;
+import edu.unimagdalena.clinica.dto.Doctor.CreateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
+import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
+import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Doctor;
 import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
 import edu.unimagdalena.clinica.service.impl.DoctorServiceImpl;
-import edu.unimagdalena.clinica.service.interfaces.DoctorService;
 import jakarta.persistence.EntityNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +42,7 @@ class DoctorServiceImplTest {
         Doctor doctor = Doctor.builder().id(1L).fullName("Juan Avendaño").email("jaavendano@gmail.com").build();
         ResponseDoctorDTO responseDoctor = new ResponseDoctorDTO(1L, "Juan Avendaño",
                 "jaavendano@gmail.com", null, null, null);
-        RequestDoctorDTO requestDoctor = new RequestDoctorDTO("Juan Avendaño",
+        CreateDoctorDTO requestDoctor = new CreateDoctorDTO("Juan Avendaño",
                 "jaavendano@gmail.com", null, null, null);
 
         when(doctorRepository.save(any(Doctor.class))).thenReturn(doctor);
@@ -105,7 +103,7 @@ class DoctorServiceImplTest {
     void updateDoctorById() {
         Long id = 1L;
         Doctor doctor = new Doctor();
-        RequestDoctorDTO request = new RequestDoctorDTO("Nuevo Nombre", "nuevo@mail.com", "Cardiólogo", null, null  );
+        UpdateDoctorDTO request = new UpdateDoctorDTO("Nuevo Nombre", "nuevo@mail.com", "Cardiólogo", null, null  );
         ResponseDoctorDTO response = new ResponseDoctorDTO(id, "Nuevo Nombre", "nuevo@mail.com", "Cardiólogo", null, null);
 
         when(doctorRepository.findById(id)).thenReturn(Optional.of(doctor));
@@ -119,9 +117,9 @@ class DoctorServiceImplTest {
     }
 
     @Test
-    void testUpdateDoctorById_whenNotFound() {
+    void updateDoctorById_whenNotFound() {
         Long id = 999L;
-        RequestDoctorDTO requestDoctor = new RequestDoctorDTO("Juan Avendaño",
+        UpdateDoctorDTO requestDoctor = new UpdateDoctorDTO("Juan Avendaño",
                 "jaavendano@gmail.com", null, null, null);
 
 

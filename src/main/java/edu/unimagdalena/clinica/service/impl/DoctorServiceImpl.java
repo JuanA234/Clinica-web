@@ -1,14 +1,13 @@
 package edu.unimagdalena.clinica.service.impl;
 
-import edu.unimagdalena.clinica.dto.Doctor.RequestDoctorDTO;
+import edu.unimagdalena.clinica.dto.Doctor.CreateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
+import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
 import edu.unimagdalena.clinica.entity.Doctor;
 import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
 import edu.unimagdalena.clinica.service.interfaces.DoctorService;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public ResponseDoctorDTO createDoctor(RequestDoctorDTO request) {
+    public ResponseDoctorDTO createDoctor(CreateDoctorDTO request) {
         return mapper.toDTO(repository.save(mapper.toEntity(request)));
     }
 
@@ -45,7 +44,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public ResponseDoctorDTO updateDoctorById(Long id, RequestDoctorDTO request) {
+    public ResponseDoctorDTO updateDoctorById(Long id, UpdateDoctorDTO request) {
         Doctor foundDoctor = repository.findById(id).
                 orElseThrow(()-> new EntityNotFoundException("No se encontró el doctor"));
         mapper.updateEntityFromDTO(request, foundDoctor);
