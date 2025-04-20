@@ -22,7 +22,7 @@ public class Appointment {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patient_id",referencedColumnName = "id", nullable = false)
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -41,4 +41,7 @@ public class Appointment {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToOne(mappedBy = "appointment")
+    private MedicalRecord medicalRecord;
 }

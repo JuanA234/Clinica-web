@@ -29,7 +29,7 @@ class ConsultRoomRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        consultRoom = new ConsultRoom(null, "consultorio 1", "piso 1", "");
+        consultRoom = new ConsultRoom(null, "consultorio 1", "piso 1", "", null);
         consultRoomRepository.save(consultRoom);
     }
 

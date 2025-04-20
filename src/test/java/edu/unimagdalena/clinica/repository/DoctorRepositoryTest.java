@@ -27,7 +27,7 @@ class DoctorRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        doctor = new Doctor(null, "Juan Avendaño", "juanavenda@gmail.com", "ginecologo", null, null);
+        doctor = new Doctor(null, "Juan Avendaño", "juanavenda@gmail.com", "ginecologo", null, null, null);
         doctorRepository.save(doctor);
     }
 

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -32,4 +33,7 @@ public class Doctor {
     private LocalTime availableFrom;
 
     private LocalTime availableTo;
+
+    @OneToMany(mappedBy = "doctor")
+    private Set<Appointment> appointments;
 }
