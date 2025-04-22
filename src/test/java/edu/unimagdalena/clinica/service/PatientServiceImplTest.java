@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.Patient.CreatePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.ResponsePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Patient;
+import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
 import edu.unimagdalena.clinica.mapper.PatientMapper;
 import edu.unimagdalena.clinica.repository.PatientRepository;
 import edu.unimagdalena.clinica.service.impl.PatientServiceImpl;
@@ -86,10 +87,10 @@ class PatientServiceImplTest {
         Long id = 2L;
         when(patientRepository.findById(id)).thenReturn(Optional.empty());
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
                 () -> patientService.findPatientById(id));
 
-        assertEquals("No se encontró el paciente", exception.getMessage());
+        assertEquals("No se encontro el paciente con el id: " + id, exception.getMessage());
     }
 
     @Test
@@ -133,10 +134,10 @@ class PatientServiceImplTest {
 
         when(patientRepository.existsById(id)).thenReturn(false);
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
                 () -> patientService.deletePatiendById(id));
 
-        assertEquals("No se encontró el paciente", exception.getMessage());
+        assertEquals("No se encontro el paciente con el id: " + id, exception.getMessage());
         verify(patientRepository).existsById(id);
         verify(patientRepository, never()).deleteById(anyLong());
     }

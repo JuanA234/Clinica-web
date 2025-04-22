@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.Patient.CreatePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.ResponsePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Patient;
+import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
 import edu.unimagdalena.clinica.mapper.PatientMapper;
 import edu.unimagdalena.clinica.repository.PatientRepository;
 import edu.unimagdalena.clinica.service.interfaces.PatientService;
@@ -38,25 +39,22 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public ResponsePatientDTO findPatientById(Long id) {
         return patientRepository.findById(id).map(patientMapper::toDTO).
-                 orElseThrow(()-> new EntityNotFoundException("No se encontró el paciente"));
-        //TODO Cambiar a excepción personalizada
+                 orElseThrow(()-> new ResourceNotFoundException("No se encontro el paciente con el id: " + id));
     }
 
     @Override
     public ResponsePatientDTO updatePatientById(Long id, UpdatePatientDTO request) {
         Patient foundPatient = patientRepository.findById(id).
-                orElseThrow(()->new EntityNotFoundException("No se encontró el paciente"));
+                orElseThrow(()->new ResourceNotFoundException("No se encontro el paciente con el id: " + id));
         patientMapper.updateEntityFromDTO(request, foundPatient);
         return patientMapper.toDTO(foundPatient);
-        //TODO Cambiar a excepción personalizada
     }
 
     @Override
     public void deletePatiendById(Long id) {
         if (!patientRepository.existsById(id)) {
-            throw new EntityNotFoundException("No se encontró el paciente");
+            throw new ResourceNotFoundException("No se encontro el paciente con el id: " + id);
         }
         patientRepository.deleteById(id);
-        //TODO Cambiar a excepción personalizada
     }
 }

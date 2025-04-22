@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.Doctor.CreateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
 import edu.unimagdalena.clinica.entity.Doctor;
+import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
 import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
 import edu.unimagdalena.clinica.service.interfaces.DoctorService;
@@ -39,25 +40,23 @@ public class DoctorServiceImpl implements DoctorService {
     public ResponseDoctorDTO findDoctorById(Long id) {
         return repository.findById(id)
                 .map(mapper::toDTO)
-                .orElseThrow(()-> new EntityNotFoundException("No se encontró el doctor"));
-        //TODO Cambiar a excepción personalizada
+                .orElseThrow(()-> new ResourceNotFoundException("No se encontro el doctor con el id: " + id));
+
     }
 
     @Override
     public ResponseDoctorDTO updateDoctorById(Long id, UpdateDoctorDTO request) {
         Doctor foundDoctor = repository.findById(id).
-                orElseThrow(()-> new EntityNotFoundException("No se encontró el doctor"));
+                orElseThrow(()-> new ResourceNotFoundException("No se encontro el doctor con el id: " + id));
         mapper.updateEntityFromDTO(request, foundDoctor);
         return mapper.toDTO(repository.save(foundDoctor));
-        //TODO Cambiar a excepción personalizada
     }
 
     @Override
     public void deleteDoctorById(Long id) {
         if (!repository.existsById(id)){
-            throw new EntityNotFoundException("No se encontró el doctor");
+            throw new ResourceNotFoundException("No se encontro el doctor con el id: " + id);
         }
         repository.deleteById(id);
-        //TODO Cambiar a excepción personalizada
     }
 }
