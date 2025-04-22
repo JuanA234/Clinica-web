@@ -4,11 +4,10 @@ import edu.unimagdalena.clinica.dto.Patient.CreatePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.ResponsePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Patient;
-import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
+import edu.unimagdalena.clinica.exception.PatientNotFoundException;
 import edu.unimagdalena.clinica.mapper.PatientMapper;
 import edu.unimagdalena.clinica.repository.PatientRepository;
 import edu.unimagdalena.clinica.service.impl.PatientServiceImpl;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -87,7 +86,7 @@ class PatientServiceImplTest {
         Long id = 2L;
         when(patientRepository.findById(id)).thenReturn(Optional.empty());
 
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
+        PatientNotFoundException exception = assertThrows(PatientNotFoundException.class,
                 () -> patientService.findPatientById(id));
 
         assertEquals("No se encontro el paciente con el id: " + id, exception.getMessage());
@@ -134,7 +133,7 @@ class PatientServiceImplTest {
 
         when(patientRepository.existsById(id)).thenReturn(false);
 
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
+        PatientNotFoundException exception = assertThrows(PatientNotFoundException.class,
                 () -> patientService.deletePatiendById(id));
 
         assertEquals("No se encontro el paciente con el id: " + id, exception.getMessage());
