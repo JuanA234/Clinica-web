@@ -5,6 +5,7 @@ import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Doctor;
+import edu.unimagdalena.clinica.exception.DoctorNotFoundException;
 import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
 import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
@@ -96,7 +97,7 @@ class DoctorServiceImplTest {
         Long id = 99L;
         when(doctorRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> doctorService.findDoctorById(id));
+        assertThrows(DoctorNotFoundException.class, () -> doctorService.findDoctorById(id));
     }
 
     @Test
@@ -125,7 +126,7 @@ class DoctorServiceImplTest {
 
         when(doctorRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> doctorService.updateDoctorById(id, requestDoctor));
+        assertThrows(DoctorNotFoundException.class, () -> doctorService.updateDoctorById(id, requestDoctor));
     }
 
     @Test
@@ -143,7 +144,7 @@ class DoctorServiceImplTest {
         Long id = 404L;
         when(doctorRepository.existsById(id)).thenReturn(false);
 
-        assertThrows(ResourceNotFoundException.class, () -> doctorService.deleteDoctorById(id));
+        assertThrows(DoctorNotFoundException.class, () -> doctorService.deleteDoctorById(id));
     }
 
     @Test
@@ -167,6 +168,6 @@ class DoctorServiceImplTest {
         String specialty = "Cardiologia";
         when(doctorRepository.findBySpecialty(specialty)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> doctorService.findDoctorBySpecialty(specialty));
+        assertThrows(DoctorNotFoundException.class, () -> doctorService.findDoctorBySpecialty(specialty));
     }
 }
