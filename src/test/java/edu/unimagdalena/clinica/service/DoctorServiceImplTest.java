@@ -63,7 +63,6 @@ class DoctorServiceImplTest {
     void findAllDoctors() {
         Doctor doctor1 = Doctor.builder().id(1L).fullName("Juan Avendaño").email("jaavendano@gmail.com").build();
         Doctor doctor2 = Doctor.builder().id(1L).fullName("Juan Sarmiento").email("jsarmiento@gmail.com").build();
-        List<Doctor> doctors = List.of(doctor1, doctor2);
 
 
         ResponseDoctorDTO responseDoctor1 = new ResponseDoctorDTO(1L, "Juan Avendaño", "jaavendano@gmail.com", null, null, null);
@@ -145,5 +144,29 @@ class DoctorServiceImplTest {
         when(doctorRepository.existsById(id)).thenReturn(false);
 
         assertThrows(ResourceNotFoundException.class, () -> doctorService.deleteDoctorById(id));
+    }
+
+    @Test
+    void findDoctorBySpecialty() {
+        String specialty = "Cardiologia";
+        Doctor doctor = new Doctor();
+        ResponseDoctorDTO response = new ResponseDoctorDTO(1L, "Laura Torres", "laura@gmail.com", specialty, null, null);
+
+        when(doctorRepository.findBySpecialty(specialty)).thenReturn(Optional.of(doctor));
+        when(doctorMapper.toDTO(doctor)).thenReturn(response);
+
+        ResponseDoctorDTO result = doctorService.findDoctorBySpecialty(specialty);
+
+        assertEquals(response, result);
+
+    }
+
+    @Test
+    void findDoctorBySpecialty_whenNotFound() {
+
+        String specialty = "Cardiologia";
+        when(doctorRepository.findBySpecialty(specialty)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> doctorService.findDoctorBySpecialty(specialty));
     }
 }
