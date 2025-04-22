@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.Doctor.CreateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
 import edu.unimagdalena.clinica.entity.Doctor;
+import edu.unimagdalena.clinica.exception.DoctorNotFoundException;
 import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
 import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
@@ -40,14 +41,14 @@ public class DoctorServiceImpl implements DoctorService {
     public ResponseDoctorDTO findDoctorById(Long id) {
         return repository.findById(id)
                 .map(mapper::toDTO)
-                .orElseThrow(()-> new ResourceNotFoundException("No se encontro el doctor con el id: " + id));
+                .orElseThrow(()-> new DoctorNotFoundException("No se encontro el doctor con el id: " + id));
 
     }
 
     @Override
     public ResponseDoctorDTO updateDoctorById(Long id, UpdateDoctorDTO request) {
         Doctor foundDoctor = repository.findById(id).
-                orElseThrow(()-> new ResourceNotFoundException("No se encontro el doctor con el id: " + id));
+                orElseThrow(()-> new DoctorNotFoundException("No se encontro el doctor con el id: " + id));
         mapper.updateEntityFromDTO(request, foundDoctor);
         return mapper.toDTO(repository.save(foundDoctor));
     }
@@ -55,7 +56,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void deleteDoctorById(Long id) {
         if (!repository.existsById(id)){
-            throw new ResourceNotFoundException("No se encontro el doctor con el id: " + id);
+            throw new DoctorNotFoundException("No se encontro el doctor con el id: " + id);
         }
         repository.deleteById(id);
     }
@@ -64,6 +65,6 @@ public class DoctorServiceImpl implements DoctorService {
     public ResponseDoctorDTO findDoctorBySpecialty(String specialty) {
         return repository.findBySpecialty(specialty)
                 .map(mapper::toDTO)
-                .orElseThrow(()-> new ResourceNotFoundException("No se encontro el doctor con la especialidad: " + specialty));
+                .orElseThrow(()-> new DoctorNotFoundException("No se encontro el doctor con la especialidad: " + specialty));
     }
 }
