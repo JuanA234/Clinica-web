@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.ConsultRoom.CreateConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.ResponseConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.UpdateConsultRoomDTO;
 import edu.unimagdalena.clinica.entity.ConsultRoom;
+import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
 import edu.unimagdalena.clinica.mapper.ConsultRoomMapper;
 import edu.unimagdalena.clinica.repository.ConsultRoomRepository;
 import edu.unimagdalena.clinica.service.impl.ConsultRoomServiceImpl;
@@ -84,7 +85,7 @@ class ConsultRoomServiceImplTest {
         Long id = 1L;
         when(consultRoomRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> consultRoomService.findConsultRoomById(id));
+        assertThrows(ResourceNotFoundException.class, () -> consultRoomService.findConsultRoomById(id));
     }
 
     @Test
@@ -123,6 +124,6 @@ class ConsultRoomServiceImplTest {
         Long id = 1L;
         when(consultRoomRepository.existsById(id)).thenReturn(false);
 
-        assertThrows(EntityNotFoundException.class, () -> consultRoomService.deleteConsultRoomById(id));
+        assertThrows(ResourceNotFoundException.class, () -> consultRoomService.deleteConsultRoomById(id));
     }
 }

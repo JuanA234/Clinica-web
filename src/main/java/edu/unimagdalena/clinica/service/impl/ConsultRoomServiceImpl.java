@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.ConsultRoom.CreateConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.ResponseConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.UpdateConsultRoomDTO;
 import edu.unimagdalena.clinica.entity.ConsultRoom;
+import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
 import edu.unimagdalena.clinica.mapper.ConsultRoomMapper;
 import edu.unimagdalena.clinica.repository.ConsultRoomRepository;
 import edu.unimagdalena.clinica.service.interfaces.ConsultRoomService;
@@ -38,25 +39,22 @@ public class ConsultRoomServiceImpl implements ConsultRoomService{
     public ResponseConsultRoomDTO findConsultRoomById(Long id) {
         return  consultRoomRepository.findById(id)
                 .map(consultRoomMapper::toDTO)
-                .orElseThrow(()-> new EntityNotFoundException("No se encontró el consultorio"));
-        //TODO Cambiar a excepción personalizada
+                .orElseThrow(()-> new ResourceNotFoundException("No se encontro el consultorio con el id: " + id));
     }
 
     @Override
     public ResponseConsultRoomDTO updateConsultRoomById(Long id, UpdateConsultRoomDTO request) {
         ConsultRoom foundConsultorio = consultRoomRepository.findById(id).
-                orElseThrow(()-> new EntityNotFoundException("No se encontró el consultorio"));
+                orElseThrow(()-> new ResourceNotFoundException("No se encontro el consultorio con el id: " + id));
         consultRoomMapper.updateEntityFromDTO(request, foundConsultorio);
         return consultRoomMapper.toDTO(consultRoomRepository.save(foundConsultorio));
-        //TODO Cambiar a excepción personalizada
     }
 
     @Override
     public void deleteConsultRoomById(Long id) {
         if (!consultRoomRepository.existsById(id)){
-            throw new EntityNotFoundException("No se encontró el consultorio");
+            throw new ResourceNotFoundException("No se encontro el consultorio con el id: " + id);
         }
         consultRoomRepository.deleteById(id);
-        //TODO Cambiar a excepción personalizada
     }
 }
