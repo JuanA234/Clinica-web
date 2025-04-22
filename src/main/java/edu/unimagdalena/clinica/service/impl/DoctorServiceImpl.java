@@ -59,4 +59,11 @@ public class DoctorServiceImpl implements DoctorService {
         }
         repository.deleteById(id);
     }
+
+    @Override
+    public ResponseDoctorDTO findDoctorBySpecialty(String specialty) {
+        return repository.findBySpecialty(specialty)
+                .map(mapper::toDTO)
+                .orElseThrow(()-> new ResourceNotFoundException("No se encontro el doctor con la especialidad: " + specialty));
+    }
 }

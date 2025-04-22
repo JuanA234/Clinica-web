@@ -52,4 +52,14 @@ class DoctorRepositoryTest {
     void existsById() {
         assertTrue(doctorRepository.existsById(doctor.getId()));
     }
+
+    @Test
+    void findBySpecialty() {
+        Optional<Doctor> doctorEncontrado = doctorRepository.findBySpecialty(doctor.getSpecialty());
+
+        assertTrue(doctorEncontrado.isPresent());
+        assertEquals("ginecologo", doctorEncontrado.get().getSpecialty());
+    }
+
+
 }

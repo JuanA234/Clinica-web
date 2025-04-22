@@ -17,4 +17,6 @@ public interface DoctorService {
     ResponseDoctorDTO updateDoctorById(Long id, UpdateDoctorDTO request);
 
     void deleteDoctorById(Long id);
+
+    ResponseDoctorDTO findDoctorBySpecialty(String specialty);
 }
