@@ -45,4 +45,11 @@ public class DoctorController {
         doctorService.deleteDoctorById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(params = "specialty")
+    public ResponseEntity<ResponseDoctorDTO> getDoctorBySpecialty(@RequestParam String specialty){
+        return ResponseEntity.ok(doctorService.findDoctorBySpecialty(specialty));
+    }
+
+
 }
