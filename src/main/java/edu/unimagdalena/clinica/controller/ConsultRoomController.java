@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.ConsultRoom.CreateConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.ResponseConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.UpdateConsultRoomDTO;
 import edu.unimagdalena.clinica.service.interfaces.ConsultRoomService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class ConsultRoomController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseConsultRoomDTO> createRoom(@RequestBody CreateConsultRoomDTO request){
+    public ResponseEntity<ResponseConsultRoomDTO> createRoom(@RequestBody @Valid CreateConsultRoomDTO request){
         return ResponseEntity.status(HttpStatus.CREATED).body(consultRoomService.createConsultRoom(request));
     }
 
