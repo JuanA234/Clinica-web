@@ -31,13 +31,13 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDoctorDTO> createDoctor(@RequestBody CreateDoctorDTO dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.createDoctor(dto));
+    public ResponseEntity<ResponseDoctorDTO> createDoctor(@RequestBody CreateDoctorDTO request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.createDoctor(request));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDoctorDTO> updateDoctor(@PathVariable Long id, @RequestBody UpdateDoctorDTO dto){
-        return ResponseEntity.ok(doctorService.updateDoctorById(id, dto));
+    public ResponseEntity<ResponseDoctorDTO> updateDoctor(@PathVariable Long id, @RequestBody UpdateDoctorDTO request){
+        return ResponseEntity.ok(doctorService.updateDoctorById(id, request));
     }
 
     @DeleteMapping("/{id}")
@@ -45,4 +45,5 @@ public class DoctorController {
         doctorService.deleteDoctorById(id);
         return ResponseEntity.noContent().build();
     }
+
 }
