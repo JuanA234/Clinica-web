@@ -100,10 +100,7 @@ class PatientServiceImplTest {
         ResponsePatientDTO responseDTO = new ResponsePatientDTO(id, patient.getFullName(), "jaavendano@gmail.com", null);
 
         when(patientRepository.findById(id)).thenReturn(Optional.of(patient));
-        doAnswer(invocation -> {
-            // simula que el mapper actualiza el objeto
-            return null;
-        }).when(patientMapper).updateEntityFromDTO(dto, patient);
+        when(patientMapper.updateEntityFromDTO(dto, patient)).thenReturn(patient);
         when(patientMapper.toDTO(patient)).thenReturn(responseDTO);
 
         ResponsePatientDTO result = patientService.updatePatientById(id, dto);

@@ -21,8 +21,5 @@ public interface AppointmentMapper {
     Appointment toEntity(CreateAppointmentDTO dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "patientId", target = "patient.id")
-    @Mapping(source = "doctorId", target = "doctor.id")
-    @Mapping(source = "consultRoomId", target = "consultRoom.id")
     Appointment updateEntityFromDTO(UpdateAppointmentDTO dto, @MappingTarget Appointment appointment);
 }

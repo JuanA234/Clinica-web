@@ -96,10 +96,7 @@ class ConsultRoomServiceImplTest {
         ResponseConsultRoomDTO response = new ResponseConsultRoomDTO(id, "consultorio", "piso 1", "");
 
         when(consultRoomRepository.findById(id)).thenReturn(Optional.of(existing));
-        doAnswer(invocation -> {
-            request.getClass(); // simplemente para no dejarlo vacío
-            return null;
-        }).when(consultRoomMapper).updateEntityFromDTO(request, existing);
+        when(consultRoomMapper.updateEntityFromDTO(request, existing)).thenReturn(updated);
         when(consultRoomRepository.save(existing)).thenReturn(updated);
         when(consultRoomMapper.toDTO(updated)).thenReturn(response);
 
