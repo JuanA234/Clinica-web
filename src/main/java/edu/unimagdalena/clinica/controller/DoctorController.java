@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.Doctor.CreateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
 import edu.unimagdalena.clinica.service.interfaces.DoctorService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDoctorDTO> createDoctor(@RequestBody CreateDoctorDTO request){
+    public ResponseEntity<ResponseDoctorDTO> createDoctor(@RequestBody @Valid CreateDoctorDTO request){
         return ResponseEntity.status(HttpStatus.CREATED).body(doctorService.createDoctor(request));
     }
 

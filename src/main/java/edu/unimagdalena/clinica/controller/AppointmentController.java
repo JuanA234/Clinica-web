@@ -4,6 +4,7 @@ import edu.unimagdalena.clinica.dto.Appointment.CreateAppointmentDTO;
 import edu.unimagdalena.clinica.dto.Appointment.ResponseAppointmentDTO;
 import edu.unimagdalena.clinica.dto.Appointment.UpdateAppointmentDTO;
 import edu.unimagdalena.clinica.service.interfaces.AppointmentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class AppointmentController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseAppointmentDTO> createAppointment(@RequestBody CreateAppointmentDTO request) {
+    public ResponseEntity<ResponseAppointmentDTO> createAppointment(@RequestBody @Valid CreateAppointmentDTO request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.createAppointment(request));
     }
 
