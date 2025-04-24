@@ -43,7 +43,7 @@ class DoctorControllerTest {
     @Test
     void getAllDoctors()throws Exception {
         when(doctorService.findAllDoctors()).thenReturn(List.of(new ResponseDoctorDTO(1L, null, null, null, null, null)));
-        mockMvc.perform(get("/api/v1/doctors"))
+        mockMvc.perform(get("/api/doctors"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1L));
 
@@ -59,7 +59,7 @@ class DoctorControllerTest {
                 LocalTime.now().plusHours(12));
         when(doctorService.findDoctorById(1L)).thenReturn(response);
 
-        mockMvc.perform(get("/api/v1/doctors/1"))
+        mockMvc.perform(get("/api/doctors/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L));
     }
@@ -80,7 +80,7 @@ class DoctorControllerTest {
 
         when(doctorService.createDoctor(any())).thenReturn(response);
 
-        mockMvc.perform(post("/api/v1/doctors")
+        mockMvc.perform(post("/api/doctors")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -104,7 +104,7 @@ class DoctorControllerTest {
 
         when(doctorService.updateDoctorById(1L,request)).thenReturn(response);
 
-        mockMvc.perform(put("/api/v1/doctors/1").
+        mockMvc.perform(put("/api/doctors/1").
                 contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -114,7 +114,7 @@ class DoctorControllerTest {
 
     @Test
     void deleteDoctor() throws Exception {
-        mockMvc.perform(delete("/api/v1/doctors/1"))
+        mockMvc.perform(delete("/api/doctors/1"))
                 .andExpect(status().isNoContent());
 
         verify(doctorService).deleteDoctorById(1L);
@@ -125,7 +125,7 @@ class DoctorControllerTest {
         ResponseDoctorDTO doctor = new ResponseDoctorDTO(1L, "Dr. Cardiologo", "cardio@mail.com", "Cardiología", null, null);
         when(doctorService.findDoctorBySpecialty("Cardiología")).thenReturn(doctor);
 
-        mockMvc.perform(get("/api/v1/doctors")
+        mockMvc.perform(get("/api/doctors")
                         .param("specialty", "Cardiología"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.fullname").value("Dr. Cardiologo"))
