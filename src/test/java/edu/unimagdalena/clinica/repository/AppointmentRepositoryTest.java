@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Import;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +38,8 @@ class AppointmentRepositoryTest {
 
     Appointment appointment;
     Doctor doctor;
+    LocalDateTime start = LocalDateTime.now().plusDays(1).withNano(0);
+    LocalDateTime end = start.plusHours(1);
 
     @BeforeEach
     void setUp() {
@@ -64,13 +68,14 @@ class AppointmentRepositoryTest {
                 .build();
         consultRoomRepository.save(room);
 
+
         // Crear y guardar cita
         appointment = Appointment.builder()
                 .doctor(doctor)
                 .patient(patient)
                 .consultRoom(room)
-                .startTime(LocalDateTime.now().plusDays(1))
-                .endTime(LocalDateTime.now().plusDays(1).plusHours(1))
+                .startTime(start)
+                .endTime(end)
                 .status(Status.SCHEDULED)
                 .build();
         appointmentRepository.save(appointment);
@@ -87,16 +92,42 @@ class AppointmentRepositoryTest {
     }
 
     @Test
-    void findByDoctor() {
-        Optional<Appointment> encontrado = appointmentRepository.findByDoctor(doctor);
+    void findByDoctorAndDate() {
+        // Día de la cita
+        LocalDate targetDate = LocalDate.now().plusDays(1);
+        LocalDateTime startOfDay = targetDate.atStartOfDay();
+        LocalDateTime endOfDay = targetDate.plusDays(1).atStartOfDay();
 
-        assertTrue(encontrado.isPresent());
-        assertEquals(doctor.getId(), encontrado.get().getDoctor().getId());
+        // Guardamos otra cita en ese mismo día (misma doctora)
+        Appointment otraCita = Appointment.builder()
+                .doctor(doctor)
+                .patient(patientRepository.findAll().get(0))
+                .consultRoom(consultRoomRepository.findAll().get(0))
+                .startTime(startOfDay.plusHours(2))
+                .endTime(startOfDay.plusHours(3))
+                .status(Status.SCHEDULED)
+                .build();
+        appointmentRepository.save(otraCita);
+
+        // Ejecutamos la query
+        List<Appointment> citas = appointmentRepository.findByDoctorAndDate(doctor.getId(), startOfDay, endOfDay);
+
+        // Verificamos que retorne 2 citas
+        assertEquals(2, citas.size());
+        assertTrue(citas.stream().allMatch(c -> c.getDoctor().getId().equals(doctor.getId())));
+        assertTrue(citas.stream().allMatch(c -> !c.getStartTime().isBefore(startOfDay) && c.getStartTime().isBefore(endOfDay)));
     }
 
 
     @Test
     void existsById() {
         assertTrue(appointmentRepository.existsById(appointment.getId()));
+    }
+
+    @Test
+    void findConflicts() {
+        List<Appointment> appointments = appointmentRepository.findConflicts(appointment.getDoctor().getId()
+        , appointment.getConsultRoom().getId(), start, end);
+        assertEquals(appointment.getId(), appointments.get(0).getId());
     }
 }

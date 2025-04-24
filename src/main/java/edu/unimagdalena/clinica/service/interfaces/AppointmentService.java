@@ -5,6 +5,7 @@ import edu.unimagdalena.clinica.dto.Appointment.ResponseAppointmentDTO;
 import edu.unimagdalena.clinica.dto.Appointment.UpdateAppointmentDTO;
 import edu.unimagdalena.clinica.entity.Appointment;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AppointmentService {
@@ -18,5 +19,5 @@ public interface AppointmentService {
 
     void deleteAppointment(Long id);
 
-    ResponseAppointmentDTO findAppointmentByDoctorId(Long id);
+    List<ResponseAppointmentDTO> findAppointmentByDoctorId(Long doctorId, LocalDate date);
 }
