@@ -114,7 +114,7 @@ class AppointmentServiceImplTest {
     }
 
     @Test
-    void createAppointmentWhenfindConflicts(){
+    void createAppointmentWhenFindConflicts(){
         CreateAppointmentDTO createAppointmentDTO = new CreateAppointmentDTO(patient.getId(), doctor.getId(), consultRoom.getId(), start, end);
 
 
