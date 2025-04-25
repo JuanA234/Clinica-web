@@ -9,9 +9,9 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record CreateAppointmentDTO(
-        @NotBlank Long patientId,
-        @NotBlank Long doctorId,
-        @NotBlank Long consultRoomId,
+        @NotNull Long patientId,
+        @NotNull Long doctorId,
+        @NotNull Long consultRoomId,
         @NotNull LocalDateTime startTime,
         @NotNull LocalDateTime endTime
 
