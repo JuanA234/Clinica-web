@@ -3,14 +3,11 @@ package edu.unimagdalena.clinica.service;
 import edu.unimagdalena.clinica.dto.Doctor.CreateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
-import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Doctor;
-import edu.unimagdalena.clinica.exception.DoctorNotFoundException;
-import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
+import edu.unimagdalena.clinica.exception.notFound.DoctorNotFoundException;
 import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
 import edu.unimagdalena.clinica.service.impl.DoctorServiceImpl;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,7 +42,7 @@ class DoctorServiceImplTest {
         ResponseDoctorDTO responseDoctor = new ResponseDoctorDTO(1L, "Juan Avendaño",
                 "jaavendano@gmail.com", null, null, null);
         CreateDoctorDTO requestDoctor = new CreateDoctorDTO("Juan Avendaño",
-                "jaavendano@gmail.com", null, null, null);
+                "jaavendano@gmail.com", null, null, null,null );
 
         when(doctorRepository.save(any(Doctor.class))).thenReturn(doctor);
         when(doctorMapper.toDTO(doctor)).thenReturn(responseDoctor);

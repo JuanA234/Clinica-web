@@ -1,5 +1,6 @@
 package edu.unimagdalena.clinica.exception;
 
+import edu.unimagdalena.clinica.exception.notFound.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -67,5 +68,51 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = AppointmentAlreadyExists.class)
+    public ResponseEntity<ApiError> handleAppointmentAlreadyExists(AppointmentAlreadyExists ex) {
+        ApiError error = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
 
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler (value = AppointmentTimeNotAvailableException.class)
+    public ResponseEntity<ApiError> handleAppointmentTimeNotAvailable(AppointmentTimeNotAvailableException ex) {
+        ApiError error = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler (value = UserLoginException.class)
+    public ResponseEntity<ApiError> handleUserLoginException(UserLoginException ex) {
+        ApiError error = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = UserAlreadyRegistered.class)
+    public ResponseEntity<ApiError> handleUserAlreadyRegistered(UserAlreadyRegistered ex) {
+        ApiError error = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .errors(null)
+                .build();
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
 }

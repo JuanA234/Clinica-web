@@ -1,6 +1,7 @@
 package edu.unimagdalena.clinica.repository;
 
 import edu.unimagdalena.clinica.entity.*;
+import edu.unimagdalena.clinica.enumeration.Status;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

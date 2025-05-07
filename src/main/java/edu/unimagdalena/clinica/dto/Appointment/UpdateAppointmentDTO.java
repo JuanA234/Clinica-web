@@ -1,6 +1,6 @@
 package edu.unimagdalena.clinica.dto.Appointment;
 
-import edu.unimagdalena.clinica.entity.Status;
+import edu.unimagdalena.clinica.enumeration.Status;
 
 import java.time.LocalDateTime;
 

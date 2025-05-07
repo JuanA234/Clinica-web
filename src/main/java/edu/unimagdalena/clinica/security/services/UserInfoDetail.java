@@ -28,7 +28,7 @@ public class UserInfoDetail implements UserDetails {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_"+role.getName()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_"+role.getRole()))
                 .collect(Collectors.toSet());
     }
     @Override

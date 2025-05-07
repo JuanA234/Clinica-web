@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.unimagdalena.clinica.dto.Appointment.CreateAppointmentDTO;
 import edu.unimagdalena.clinica.dto.Appointment.ResponseAppointmentDTO;
 import edu.unimagdalena.clinica.dto.Appointment.UpdateAppointmentDTO;
-import edu.unimagdalena.clinica.entity.Status;
+import edu.unimagdalena.clinica.enumeration.Status;
 import edu.unimagdalena.clinica.service.interfaces.AppointmentService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

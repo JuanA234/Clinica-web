@@ -70,7 +70,8 @@ class DoctorControllerTest {
                 "juanavendano@gmail.com",
                 "cardiologia",
                 LocalTime.now().plusHours(1),
-                LocalTime.now().plusHours(12));
+                LocalTime.now().plusHours(12),
+                "1231412");
 
         ResponseDoctorDTO response = new ResponseDoctorDTO(1L, "Juan Avendaño",
                 "juanavendano@gmail.com",
