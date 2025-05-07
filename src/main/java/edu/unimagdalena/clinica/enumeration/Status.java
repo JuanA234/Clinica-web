@@ -1,4 +1,4 @@
-package edu.unimagdalena.clinica.entity;
+package edu.unimagdalena.clinica.enumeration;
 
 public enum Status {
     SCHEDULED,

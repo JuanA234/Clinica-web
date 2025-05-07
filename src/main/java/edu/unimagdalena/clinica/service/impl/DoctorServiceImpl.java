@@ -4,30 +4,59 @@ import edu.unimagdalena.clinica.dto.Doctor.CreateDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.ResponseDoctorDTO;
 import edu.unimagdalena.clinica.dto.Doctor.UpdateDoctorDTO;
 import edu.unimagdalena.clinica.entity.Doctor;
-import edu.unimagdalena.clinica.exception.DoctorNotFoundException;
-import edu.unimagdalena.clinica.exception.ResourceNotFoundException;
+import edu.unimagdalena.clinica.entity.Role;
+import edu.unimagdalena.clinica.entity.User;
+import edu.unimagdalena.clinica.enumeration.RolesEnum;
+import edu.unimagdalena.clinica.exception.UserAlreadyRegistered;
+import edu.unimagdalena.clinica.exception.notFound.DoctorNotFoundException;
+import edu.unimagdalena.clinica.exception.notFound.RoleNotFoundException;
 import edu.unimagdalena.clinica.mapper.DoctorMapper;
 import edu.unimagdalena.clinica.repository.DoctorRepository;
+import edu.unimagdalena.clinica.repository.RoleRepository;
+import edu.unimagdalena.clinica.repository.UserRepository;
 import edu.unimagdalena.clinica.service.interfaces.DoctorService;
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository repository;
     private final DoctorMapper mapper;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private  final PasswordEncoder passwordEncoder;
 
 
-    public DoctorServiceImpl(DoctorRepository repository, DoctorMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+    public DoctorServiceImpl(DoctorRepository doctorRepository, DoctorMapper doctorMapper, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.repository = doctorRepository;
+        this.mapper = doctorMapper;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public ResponseDoctorDTO createDoctor(CreateDoctorDTO request) {
+
+        if(userRepository.existsByEmail(request.email())){
+            throw new UserAlreadyRegistered("Usuario ya existe");
+        }
+
+        User user = new User();
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password()));
+
+        Role role = roleRepository.findByRole(RolesEnum.DOCTOR)
+                .orElseThrow(()->new RoleNotFoundException("No existe el rol"));
+
+        user.setRoles(Set.of(role));
+        userRepository.save(user);
+
+
         return mapper.toDTO(repository.save(mapper.toEntity(request)));
     }
 

@@ -10,6 +10,7 @@ public record CreateDoctorDTO(
         @NotBlank String email,
         @NotBlank String specialty,
         @NotNull LocalTime availableFrom,
-        @NotNull LocalTime availableTo
+        @NotNull LocalTime availableTo,
+        @NotBlank String password
 ) {
 }

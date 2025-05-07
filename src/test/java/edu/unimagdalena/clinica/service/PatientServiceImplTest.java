@@ -4,7 +4,7 @@ import edu.unimagdalena.clinica.dto.Patient.CreatePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.ResponsePatientDTO;
 import edu.unimagdalena.clinica.dto.Patient.UpdatePatientDTO;
 import edu.unimagdalena.clinica.entity.Patient;
-import edu.unimagdalena.clinica.exception.PatientNotFoundException;
+import edu.unimagdalena.clinica.exception.notFound.PatientNotFoundException;
 import edu.unimagdalena.clinica.mapper.PatientMapper;
 import edu.unimagdalena.clinica.repository.PatientRepository;
 import edu.unimagdalena.clinica.service.impl.PatientServiceImpl;

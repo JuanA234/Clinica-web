@@ -2,8 +2,6 @@ package edu.unimagdalena.clinica.dto.Appointment;
 
 
 
-import edu.unimagdalena.clinica.entity.Status;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;

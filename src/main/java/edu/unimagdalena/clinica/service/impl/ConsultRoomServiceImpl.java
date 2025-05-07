@@ -4,7 +4,7 @@ import edu.unimagdalena.clinica.dto.ConsultRoom.CreateConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.ResponseConsultRoomDTO;
 import edu.unimagdalena.clinica.dto.ConsultRoom.UpdateConsultRoomDTO;
 import edu.unimagdalena.clinica.entity.ConsultRoom;
-import edu.unimagdalena.clinica.exception.ConsultRoomNotFoundException;
+import edu.unimagdalena.clinica.exception.notFound.ConsultRoomNotFoundException;
 import edu.unimagdalena.clinica.mapper.ConsultRoomMapper;
 import edu.unimagdalena.clinica.repository.ConsultRoomRepository;
 import edu.unimagdalena.clinica.service.interfaces.ConsultRoomService;

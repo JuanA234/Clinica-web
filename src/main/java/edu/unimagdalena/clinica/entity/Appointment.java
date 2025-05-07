@@ -1,5 +1,6 @@
 package edu.unimagdalena.clinica.entity;
 
+import edu.unimagdalena.clinica.enumeration.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import lombok.AllArgsConstructor;
