@@ -145,7 +145,7 @@ Asegúrate de tener agregadas las dependencias de Swagger OpenAPI si lo estás u
 
 ## 👨‍💻 Autores
 
-Desarrollado por Juan Andrés Avendaño Luján y Juan Sebastian Sarmiento Mendoza
+Desarrollado por Juan Andrés Avendaño Luján y Juan Sebastian Sarmiento Mendoza  
 Estudiantes de Ingeniería de Sistemas  
 📧 juanandreslujan30@gmail.com  
 📧  juanse130904@outlook.com    
