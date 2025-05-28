@@ -4,6 +4,20 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Archivos de configuración sensibles
+application.properties
+application-local.properties
+application-dev.properties
+application-prod.properties
+
+# Variables de entorno
+.env
+*.env
+
+# Logs
+logs/
+*.log
+
 ### STS ###
 .apt_generated
 .classpath
