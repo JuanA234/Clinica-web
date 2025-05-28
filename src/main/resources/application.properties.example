@@ -1,0 +1,15 @@
+# application.properties (SEGURO para GitHub)
+spring.application.name=Clinica
+spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/Clinica}
+spring.datasource.username=${DB_USERNAME:postgres}
+spring.datasource.password=${DB_PASSWORD}
+spring.jpa.show-sql=true
+
+## Hibernate Properties
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update
+
+# JWT Configuration
+jwt.secretKey=${JWT_SECRET_KEY}
+jwt.expiration=${JWT_EXPIRATION:3600000}
