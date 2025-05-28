@@ -131,8 +131,6 @@ src
 
 ## 📷 Capturas (opcional)
 
-Aquí puedes incluir capturas de pantalla si tienes frontend o documentación Swagger UI.
-
 ## 🧾 Documentación Swagger
 
 Al iniciar la aplicación, puedes acceder a la documentación de la API en:
