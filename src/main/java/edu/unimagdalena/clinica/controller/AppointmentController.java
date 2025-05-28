@@ -7,6 +7,7 @@ import edu.unimagdalena.clinica.service.interfaces.AppointmentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -48,6 +49,7 @@ public class AppointmentController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
     @GetMapping(params = {"doctorId", "date"})
     public ResponseEntity<List<ResponseAppointmentDTO>> getAppointmentByDoctorId(@RequestParam Long doctorId, @RequestParam LocalDate date){
         return ResponseEntity.ok(appointmentService.findAppointmentByDoctorId(doctorId, date));

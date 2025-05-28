@@ -295,7 +295,7 @@ class AppointmentServiceImplTest {
     void findAppointmentByDoctorId() {
         LocalDate date = start.toLocalDate();
 
-        when(appointmentRepository.findByDoctorAndDate(appointment.getDoctor().getId(), date.atStartOfDay(), date.plusDays(1).atStartOfDay())).thenReturn(
+        when(appointmentRepository.findScheduledByDoctorAndDate(appointment.getDoctor().getId(), date.atStartOfDay(), date.plusDays(1).atStartOfDay())).thenReturn(
                 List.of(appointment)
         );
         when(appointmentMapper.toDTO(appointment)).thenReturn(response);

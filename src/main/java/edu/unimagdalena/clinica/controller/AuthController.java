@@ -2,15 +2,15 @@ package edu.unimagdalena.clinica.controller;
 
 import edu.unimagdalena.clinica.dto.User.UserInfo;
 import edu.unimagdalena.clinica.dto.User.UserLoginDTORequest;
+import edu.unimagdalena.clinica.dto.User.UserLoginDTOResponse;
+import edu.unimagdalena.clinica.dto.User.UserRegisterDTORequest;
 import edu.unimagdalena.clinica.security.jwt.JwtUtil;
-import edu.unimagdalena.clinica.security.services.JpaUserDetailsService;
+import edu.unimagdalena.clinica.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,25 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 @AllArgsConstructor
 public class AuthController {
-    private final JpaUserDetailsService service;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
 
 
     @PostMapping("/register")
-    public ResponseEntity<UserInfo> addNewUser(@RequestBody UserInfo userInfo) {
-        UserInfo response = service.addUser(userInfo);
+    public ResponseEntity<UserInfo> addNewUser(@Valid @RequestBody UserRegisterDTORequest request) {
+        UserInfo response = authService.addUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateAndGetToken(@RequestBody UserLoginDTORequest userLoginDTORequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginDTORequest.email(), userLoginDTORequest.password()));
-        if (authentication.isAuthenticated()) {
-            String token = jwtUtil.generateToken(userLoginDTORequest.email());
-            return ResponseEntity.ok(token);
-        } else {
-            throw new UsernameNotFoundException("Invalid user request!");
-        }
+    public ResponseEntity<UserLoginDTOResponse> authenticateAndGetToken(@RequestBody UserLoginDTORequest userLoginDTORequest) {
+        return ResponseEntity.ok(authService.login(userLoginDTORequest));
     }
 }

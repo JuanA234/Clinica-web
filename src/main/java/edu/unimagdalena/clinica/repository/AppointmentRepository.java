@@ -17,12 +17,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     boolean existsById(Long id);
 
 
-    @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId " +
-            "AND a.startTime >= :startOfDay  " +
-            "AND a.startTime < :endOfDay")
-    List<Appointment> findByDoctorAndDate(@Param("doctorId") Long doctorId, @Param("startOfDay") LocalDateTime startOfDay,
-                                       @Param("endOfDay") LocalDateTime endOfDay);
-
+    @Query("SELECT a FROM Appointment a WHERE a.doctor.id = :doctorId AND a.startTime >= :startOfDay AND a.startTime < :endOfDay AND a.status = 'SCHEDULED'")
+    List<Appointment> findScheduledByDoctorAndDate(@Param("doctorId") Long doctorId,
+                                                   @Param("startOfDay") LocalDateTime startOfDay,
+                                                   @Param("endOfDay") LocalDateTime endOfDay);
 
     @Query("SELECT a FROM Appointment a WHERE ((a.doctor.id = :doctorId OR a.consultRoom.id = :consultRoomId))"+
     "AND ((a.startTime < :endTime AND a.endTime > :startTime))")

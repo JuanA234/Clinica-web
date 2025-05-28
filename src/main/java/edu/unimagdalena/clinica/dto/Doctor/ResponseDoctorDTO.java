@@ -6,7 +6,7 @@ import java.time.LocalTime;
 
 public record ResponseDoctorDTO(
         Long id,
-        String fullname,
+        String fullName,
         String email,
         String specialty,
         LocalTime availableFrom,

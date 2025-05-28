@@ -89,27 +89,32 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public ResponseAppointmentDTO updateAppointment(Long id, UpdateAppointmentDTO request) {
-        Appointment foundAppointment = appointmentRepository.findById(id).orElseThrow(
-                ()-> new AppointmentNotFoundException("No se encontro la cita con el id: " + id)
-        );
-        LocalTime startTime = request.startTime().toLocalTime();
-        LocalTime endTime = request.endTime().toLocalTime();
+        Appointment foundAppointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new AppointmentNotFoundException("No se encontró la cita con el id: " + id));
 
+        if (request.startTime() != null && request.endTime() != null) {
+            LocalTime startTime = request.startTime().toLocalTime();
+            LocalTime endTime = request.endTime().toLocalTime();
 
-        if(request.startTime().isBefore(LocalDateTime.now()) || request.endTime().isBefore(request.startTime())) {
-            throw new AppointmentTimeNotAvailableException("El horario de tiempo incorrecto");
-        }else if(startTime.isAfter(foundAppointment.getDoctor().getAvailableTo()) ||
-        startTime.isBefore(foundAppointment.getDoctor().getAvailableFrom()) ||
-                endTime.isAfter(foundAppointment.getDoctor().getAvailableTo())) {
-            throw new AppointmentTimeNotAvailableException("La cita no puede ser fuera del horario de disponibilidad del doctor ");
-        }else if(foundAppointment.getStatus()!= Status.SCHEDULED){
-            throw new AppointmentTimeNotAvailableException("La cita ya fue completada o cancelada");
+            if (request.startTime().isBefore(LocalDateTime.now()) || request.endTime().isBefore(request.startTime())) {
+                throw new AppointmentTimeNotAvailableException("El horario de tiempo es incorrecto");
+            }
+
+            if (startTime.isAfter(foundAppointment.getDoctor().getAvailableTo()) ||
+                    startTime.isBefore(foundAppointment.getDoctor().getAvailableFrom()) ||
+                    endTime.isAfter(foundAppointment.getDoctor().getAvailableTo())) {
+                throw new AppointmentTimeNotAvailableException("La cita no puede ser fuera del horario de disponibilidad del doctor");
+            }
         }
 
+        if (foundAppointment.getStatus() != Status.SCHEDULED) {
+            throw new AppointmentTimeNotAvailableException("La cita ya fue completada o cancelada");
+        }
 
         appointmentMapper.updateEntityFromDTO(request, foundAppointment);
         return appointmentMapper.toDTO(appointmentRepository.save(foundAppointment));
     }
+
 
     @Override
     public void deleteAppointment(Long id) {
@@ -123,9 +128,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<ResponseAppointmentDTO> findAppointmentByDoctorId(Long doctorId, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
-        return appointmentRepository.findByDoctorAndDate(doctorId, startOfDay, endOfDay)
+        return appointmentRepository.findScheduledByDoctorAndDate(doctorId, startOfDay, endOfDay)
                 .stream().map(appointmentMapper::toDTO).toList();
     }
+
 
 
 }

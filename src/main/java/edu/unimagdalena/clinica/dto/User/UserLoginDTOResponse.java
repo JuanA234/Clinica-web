@@ -1,10 +1,9 @@
 package edu.unimagdalena.clinica.dto.User;
 
+import edu.unimagdalena.clinica.enumeration.RolesEnum;
 import jakarta.validation.constraints.NotBlank;
 
 public record UserLoginDTOResponse(
-        String user,
-        String password,
         String role,
         String token
 ) {

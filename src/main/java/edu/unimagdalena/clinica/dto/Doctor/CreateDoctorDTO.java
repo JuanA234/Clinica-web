@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalTime;
 
 public record CreateDoctorDTO(
-        @NotBlank String fullname,
+        @NotBlank String fullName,
         @NotBlank String email,
         @NotBlank String specialty,
         @NotNull LocalTime availableFrom,

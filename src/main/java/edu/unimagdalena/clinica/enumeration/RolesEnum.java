@@ -1,8 +1,8 @@
 package edu.unimagdalena.clinica.enumeration;
 
 public enum RolesEnum {
-    DOCTOR("ROLE_DOCTOR"),
-    ADMIN("ROLE_ADMIN");
+    DOCTOR("DOCTOR"),
+    ADMIN("ADMIN");
 
     private final String role;
 

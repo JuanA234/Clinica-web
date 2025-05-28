@@ -111,7 +111,7 @@ class AppointmentRepositoryTest {
         appointmentRepository.save(otraCita);
 
         // Ejecutamos la query
-        List<Appointment> citas = appointmentRepository.findByDoctorAndDate(doctor.getId(), startOfDay, endOfDay);
+        List<Appointment> citas = appointmentRepository.findScheduledByDoctorAndDate(doctor.getId(), startOfDay, endOfDay);
 
         // Verificamos que retorne 2 citas
         assertEquals(2, citas.size());

@@ -15,6 +15,7 @@ import edu.unimagdalena.clinica.repository.DoctorRepository;
 import edu.unimagdalena.clinica.repository.RoleRepository;
 import edu.unimagdalena.clinica.repository.UserRepository;
 import edu.unimagdalena.clinica.service.interfaces.DoctorService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,7 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
         User user = new User();
+        user.setUsername(request.fullName());
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
 
@@ -84,10 +86,15 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void deleteDoctorById(Long id) {
-        if (!repository.existsById(id)){
-            throw new DoctorNotFoundException("No se encontro el doctor con el id: " + id);
-        }
-        repository.deleteById(id);
+        Doctor doctor = repository.findById(id)
+                .orElseThrow(() -> new DoctorNotFoundException("No se encontró el doctor con el id: " + id));
+
+        // Buscar el usuario por el email del doctor
+        User user = userRepository.findByEmail(doctor.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("No se encontró el usuario asociado al doctor"));
+        userRepository.delete(user); // Elimina el usuario si existe
+
+        repository.delete(doctor);
     }
 
     @Override

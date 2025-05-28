@@ -3,6 +3,7 @@ package edu.unimagdalena.clinica.security;
 import edu.unimagdalena.clinica.security.jwt.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -33,8 +34,13 @@ public class SecurityConfig {
         return http.csrf(//csrf->csrf.disable()
                          AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth->auth.requestMatchers("/api/auth").permitAll()
-                .anyRequest().authenticated()
+                .authorizeHttpRequests(auth->auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/appointments").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/appointments/").hasAnyRole("ADMIN", "DOCTOR")
+                        .requestMatchers(HttpMethod.POST,"/api/v1/records").hasRole("DOCTOR")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/records/patients/").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
